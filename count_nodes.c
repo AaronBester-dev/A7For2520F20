@@ -11,7 +11,7 @@ int main(int argc, char * argv[]){
     join_graph(START_BOARD);
 
     for(i = 0; i < HSIZE; i++){
-        if(htable[i]->init == 1){
+        if(htable[i].init == 1){
             numOfNodes++;
         }
     }
