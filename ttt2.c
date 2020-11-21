@@ -24,7 +24,7 @@ int depth(Board board){
 char winner(Board board){
     int depthOfBoard = depth(board);
     int i = 0;
-    
+
     for(i = 0; i < 8; i++){
         if(board[pos2idx[WINS[i][0]]] == 'X' && board[pos2idx[WINS[i][1]]] == 'X' && board[pos2idx[WINS[i][2]]] == 'X'){
             return('X');
@@ -69,7 +69,6 @@ void join_graph(Board board){
     int hashNumOfBoard = board_hash(board);
     int hashNumOfCopiedBoard = 0;
     Board copyOfBoard;
-    int counter = 0;
     int i = 0;
 
     for(i = 0; i < 9; i++){
@@ -81,14 +80,8 @@ void join_graph(Board board){
             copyOfBoard[pos2idx[i]] = turn(copyOfBoard);
             hashNumOfCopiedBoard = board_hash(copyOfBoard);
             htable[hashNumOfBoard].move[i] = hashNumOfCopiedBoard;
-            while(counter < HSIZE || htable[hashNumOfCopiedBoard].init != 0){
-                hashNumOfCopiedBoard++;
-                counter++;
-                if(hashNumOfCopiedBoard >= HSIZE){
-                    hashNumOfCopiedBoard = 0;
-                }
-            }
-            if(counter >= HSIZE){
+
+            if(htable[hashNumOfCopiedBoard].init == 0){
                 init_board(copyOfBoard);
                 join_graph(copyOfBoard);
             }
@@ -109,10 +102,10 @@ void compute_score(){
                     htable[i].score = 1;
                 }
                 else if(htable[i].winner == 'O'){
-                    htable[i].score = -1;
+                    htable[i]->score = -1;
                 }
                 else if(htable[i].winner == '-'){
-                    htable[i].score = 0;
+                    htable[i]->score = 0;
                 }
                 else if(htable[i].turn == 'X'){
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
