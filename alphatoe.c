@@ -11,6 +11,7 @@ int main( int argc, char **argv )
   join_graph(START_BOARD);
   compute_score();
 
+
   
   printf( "X or O? " );
   fflush( stdin ); // clear any extra characters in the input stream

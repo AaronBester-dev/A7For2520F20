@@ -88,35 +88,35 @@ void join_graph(Board board){
         }
     }
 }
-/*
+
 void compute_score(){
     int i = 0;
     int moveIndex = 0;
     int depth = 9;
-    int score = 0;
-    
+
     for(depth = 9; depth >= 0; depth--){
         for(i = 0; i < HSIZE; i++){
             if(htable[i].init == 1 && htable[i].depth == depth){
+                
                 if(htable[i].winner == 'X'){
                     htable[i].score = 1;
                 }
                 else if(htable[i].winner == 'O'){
-                    htable[i]->score = -1;
+                    htable[i].score = -1;
                 }
                 else if(htable[i].winner == '-'){
-                    htable[i]->score = 0;
+                    htable[i].score = 0;
                 }
                 else if(htable[i].turn == 'X'){
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        if(htable.move[i] != -1){
+                        if(htable[i].move[moveIndex] != -1){
                             htable[i].score++;
                         }
                     }
                 }
                 else if(htable[i].turn == 'O'){
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        if(htable.move[i] != -1){
+                        if(htable[i].move[moveIndex] == -1){
                             htable[i].score++;
                         }
                     }
@@ -140,4 +140,4 @@ int best_move(int board){
     }
     return(bestMoveHashNum);
 }
-*/
+
