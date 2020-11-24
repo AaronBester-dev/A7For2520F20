@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include "ttt.h"
 #include <string.h>
-
+/*Set init value of every board to 0*/
 void init_boards(){
     int i = 0;
     for(i = 0; i < HSIZE; i++){
         htable[i].init = 0;
     }
 }
-
+/*Calculates the depth for a board*/
 int depth(Board board){
     int i = 0;
     int depth = 0;
@@ -20,7 +20,7 @@ int depth(Board board){
     }
     return(depth);
 }
-
+/*Calculates the winner for a board*/
 char winner(Board board){
     int depthOfBoard = depth(board);
     int i = 0;
@@ -40,7 +40,7 @@ char winner(Board board){
         return('-');
     }
 }
-
+/*Calculates whose turn it is for a board*/
 char turn(Board board){
     int depthOfBoard = depth(board);
     if(depthOfBoard == 9){
@@ -54,7 +54,7 @@ char turn(Board board){
         return('O');
     }
 }
-
+/*Initializes a empty board*/
 void init_board(Board board){
     int hashNumOfBoard = board_hash(board);
 
@@ -64,7 +64,7 @@ void init_board(Board board){
     strcpy( htable[hashNumOfBoard].board,board);
     htable[hashNumOfBoard].winner = winner(board);
 }
-
+/*Fills up the move array for every single board*/
 void join_graph(Board board){
     int hashNumOfBoard = board_hash(board);
     int hashNumOfCopiedBoard = 0;
@@ -88,7 +88,7 @@ void join_graph(Board board){
         }
     }
 }
-
+/*Computes the score for the board*/
 void compute_score(){
     int i = 0;
     int moveIndex = 0;
@@ -128,7 +128,7 @@ void compute_score(){
     
 }
 
-
+/*Determines the best move for the board in the move list*/
 int best_move(int board){
     int i = 0;
     int bestMoveHashNum = 0;

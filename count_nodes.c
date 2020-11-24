@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ttt.h"
 #include <string.h>
-
+/*Program that counts how many nodes are in the htable*/
 int main(int argc, char * argv[]){
     int numOfNodes = 0;
     int i = 0;

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ttt.h"
 #include <string.h>
-
+/*Prints off the specific board specified by the user.*/
 int main(int argc, char * argv[]){
     int i = 0;
     
