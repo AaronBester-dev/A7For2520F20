@@ -97,10 +97,9 @@ void compute_score(){
     int highestScore = -2;
     int lowestScore = 2;
     for(depth = 9; depth >= 0; depth--){
-        for(i = 0; i < HSIZE; i++){
+        for(i = HSIZE; i >= 0; i--){
             if(htable[i].init == 1 && htable[i].depth == depth){
-                highestScore = -2;
-                lowestScore = 2;
+                
                 if(htable[i].winner == 'X'){
                     htable[i].score = 1;
                 }
@@ -111,18 +110,25 @@ void compute_score(){
                     htable[i].score = 0;
                 }
                 else if(htable[i].turn == 'X'){
+                    highestScore = -2;
+                    lowestScore = 2;
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        if(htable[htable[i].move[moveIndex]].score > highestScore){
-                            highestScore = htable[htable[i].move[moveIndex]].score;
+                        if(htable[i].move[moveIndex] != -1){
+                            if(htable[htable[i].move[moveIndex]].score > highestScore){
+                                highestScore = htable[htable[i].move[moveIndex]].score;
+                            }
                         }
                     }
                     htable[i].score = highestScore;
                 }
                 else if(htable[i].turn == 'O'){
+                    highestScore = -2;
+                    lowestScore = 2;
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        
-                        if(htable[htable[i].move[moveIndex]].score < lowestScore){
-                            lowestScore = htable[htable[i].move[moveIndex]].score;
+                        if(htable[i].move[moveIndex] != -1){
+                            if(htable[htable[i].move[moveIndex]].score < lowestScore){
+                                lowestScore = htable[htable[i].move[moveIndex]].score;
+                            }
                         }
                         
                     }
