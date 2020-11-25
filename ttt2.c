@@ -43,7 +43,7 @@ char winner(Board board){
 /*Calculates whose turn it is for a board*/
 char turn(Board board){
     int depthOfBoard = depth(board);
-    if(depthOfBoard == 9){
+    if(depthOfBoard == 9 || htable[board_hash(board)].winner == 'X' || htable[board_hash(board)].winner == 'O'){
         return('-');
     }
 
@@ -59,10 +59,11 @@ void init_board(Board board){
     int hashNumOfBoard = board_hash(board);
 
     htable[hashNumOfBoard].init = 1;
+    htable[hashNumOfBoard].winner = winner(board);
     htable[hashNumOfBoard].turn = turn(board);
     htable[hashNumOfBoard].depth = depth(board);
     strcpy( htable[hashNumOfBoard].board,board);
-    htable[hashNumOfBoard].winner = winner(board);
+    
 }
 /*Fills up the move array for every single board*/
 void join_graph(Board board){
@@ -93,11 +94,13 @@ void compute_score(){
     int i = 0;
     int moveIndex = 0;
     int depth = 9;
-
+    int highestScore = -2;
+    int lowestScore = 2;
     for(depth = 9; depth >= 0; depth--){
         for(i = 0; i < HSIZE; i++){
             if(htable[i].init == 1 && htable[i].depth == depth){
-                
+                highestScore = -2;
+                lowestScore = 2;
                 if(htable[i].winner == 'X'){
                     htable[i].score = 1;
                 }
@@ -109,17 +112,21 @@ void compute_score(){
                 }
                 else if(htable[i].turn == 'X'){
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        if(htable[i].move[moveIndex] != -1){
-                            htable[i].score++;
+                        if(htable[htable[i].move[moveIndex]].score > highestScore){
+                            highestScore = htable[htable[i].move[moveIndex]].score;
                         }
                     }
+                    htable[i].score = highestScore;
                 }
                 else if(htable[i].turn == 'O'){
                     for(moveIndex = 0; moveIndex < 9; moveIndex++){
-                        if(htable[i].move[moveIndex] == -1){
-                            htable[i].score++;
+                        
+                        if(htable[htable[i].move[moveIndex]].score < lowestScore){
+                            lowestScore = htable[htable[i].move[moveIndex]].score;
                         }
+                        
                     }
+                    htable[i].score = lowestScore;
                 }
                 
             }
@@ -131,13 +138,25 @@ void compute_score(){
 /*Determines the best move for the board in the move list*/
 int best_move(int board){
     int i = 0;
-    int bestMoveHashNum = 0;
-    int bestScore = -100000;
-    for(i = 0; i < 9; i++){
-        if(htable[board].move[i] != -1 && htable[htable[board].move[i]].score < bestScore){
-            bestMoveHashNum = htable[board].move[i];
+    int bestMoveNum = 0;
+    int bestScore = -2;
+    int worstScore = 2;
+    if(htable[board].turn == 'X'){
+        for(i = 0; i < 9; i++){
+          if(htable[board].move[i] != -1 && htable[htable[board].move[i]].score > bestScore){
+              bestScore = htable[htable[board].move[i]].score;
+              bestMoveNum = i;
+          }
+        }
+    }else if(htable[board].turn == 'O'){
+        for(i = 0; i < 9; i++){
+          if(htable[board].move[i] != -1 && htable[htable[board].move[i]].score < worstScore){
+              worstScore = htable[htable[board].move[i]].score;
+              bestMoveNum = i;
+          }
         }
     }
-    return(bestMoveHashNum);
+    printf("%d\n",bestMoveNum);
+    return(bestMoveNum);
 }
 

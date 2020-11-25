@@ -9,7 +9,7 @@ int main(int argc, char * argv[]){
     init_boards();
     init_board(START_BOARD);
     join_graph(START_BOARD);
-
+    compute_score();
     if(argc != 1){
         for(i = 1; i < argc; i++){
             print_node(htable[atoi(argv[i])]);
