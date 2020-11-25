@@ -156,7 +156,6 @@ int best_move(int board){
           }
         }
     }
-    printf("%d\n",bestMoveNum);
     return(bestMoveNum);
 }
 
